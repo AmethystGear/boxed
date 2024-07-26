@@ -14,17 +14,19 @@ use bevy_simple_text_input::{TextInputPlugin, TextInputSystem};
 use mouse::{mouse_world_coords, MouseWorldCoords};
 use rand::Rng;
 use rendering::{fit_canvas, setup_camera};
-use server::{update_server_visuals, Connections, Server, ServerState, WireKind};
-use text_input::{command, focus, setup_textbox};
+use server::{update_server_visuals, Server, ServerState, WireKind};
+use text_input::{ focus, setup_textbox};
+use wire::{setup_env, LineMaterial};
 
 mod assetloader;
 mod mouse;
 mod rendering;
 mod server;
 mod text_input;
+mod wire;
 
 const TILE_SIZE: f32 = 16.0;
-
+/* 
 fn setup_env(
     mut commands: Commands,
     handle_map: Res<HandleMap<ImageKey>>,
@@ -46,7 +48,7 @@ fn setup_env(
         .into_iter()
         .map(|_| (rng.gen_range(-10..10), rng.gen_range(-10..10)))
         .map(|(x, y)| {
-            let transform = get_transform((x, y), 2.0, 0.0);
+            let transform = get_transform((x, y), 1.0, 0.0);
             (
                 commands
                     .spawn(SpriteBundle {
@@ -74,7 +76,7 @@ fn setup_env(
                 if rng.gen_bool(0.3) {
                     ServerState::Healthy
                 } else {
-                    ServerState::Corrupted
+                    ServerState::Hacked
                 }
             };
             let name = alphabet
@@ -101,8 +103,7 @@ fn setup_env(
                         },
                         Server {
                             state,
-                            health: 0.0,
-                            temp: 0.0,
+
                             name,
                         },
                     ))
@@ -231,29 +232,31 @@ fn get_transform(loc: (i32, i32), size: f32, z: f32) -> Transform {
         z,
     )
 }
-
+*/
 fn main() {
     App::new()
         .insert_resource(Msaa::Off)
         .insert_resource(MouseWorldCoords::default())
-        .insert_resource(Connections::default())
         .add_plugins((
             DefaultPlugins.set(ImagePlugin::default_nearest()),
+            MaterialPlugin::<LineMaterial>::default(),
             ShapePlugin,
             TextInputPlugin,
         ))
         .register_type::<HandleMap<ImageKey>>()
         .init_resource::<HandleMap<ImageKey>>()
         .add_systems(Startup, (setup_camera, setup_env, setup_textbox))
+        
         .add_systems(
             Update,
             (
-                mouse_world_coords,
+                //mouse_world_coords,
                 fit_canvas,
-                update_server_visuals,
-                command,
-                focus.before(TextInputSystem),
+                //update_server_visuals,
+                //command,
+                //focus.before(TextInputSystem),
+            
             ),
-        )
+        )   
         .run();
 }

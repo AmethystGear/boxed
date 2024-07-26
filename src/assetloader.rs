@@ -17,7 +17,7 @@ impl FromWorld for HandleMap<ImageKey> {
         let asset_server = world.resource::<AssetServer>();
         [
             (ImageKey::Server(ServerState::Healthy), asset_server.load("images/server/healthy.png")),
-            (ImageKey::Server(ServerState::Corrupted), asset_server.load("images/server/corrupted.png")),
+            (ImageKey::Server(ServerState::Hacked), asset_server.load("images/server/hacked.png")),
             (ImageKey::Server(ServerState::Infected), asset_server.load("images/server/infected.png")),
             (ImageKey::Power, asset_server.load("images/power.png")),
             (ImageKey::Tile, asset_server.load("images/tile.png"))

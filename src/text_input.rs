@@ -4,7 +4,7 @@ use itertools::Itertools;
 
 use crate::{
     rendering::InGameCamera,
-    server::{Connections, Server, ServerState},
+    server::{Server, ServerState},
 };
 
 const BORDER_COLOR_ACTIVE: Color = Color::srgb(0.75, 0.52, 0.99);
@@ -99,7 +99,7 @@ pub fn focus(
         camera.single_mut().translation += Vec3::new(intent.x, intent.y, 0.0) * 2.;
     }
 }
-
+/* 
 fn validate_move(
     connections: &mut Connections,
     servers: &mut Query<(Entity, &mut Server)>,
@@ -117,7 +117,7 @@ fn validate_move(
             .filter(|(entity, _)| server == entity)
             .next()
         {
-            if server.name == server_name && server.state == ServerState::Corrupted {
+            if server.name == server_name && server.state == ServerState::Hacked {
                 return true;
             }
         }
@@ -137,7 +137,7 @@ pub fn command(
                 if validate_move(&mut connections, &mut servers, server_name) {
                     for (_, mut server) in &mut servers {
                         if server.state == ServerState::Infected {
-                            server.state = ServerState::Corrupted;
+                            server.state = ServerState::Hacked;
                         }
                     }
                     for (_, mut server) in &mut servers {
@@ -164,3 +164,4 @@ pub fn command(
         }
     }
 }
+*/
